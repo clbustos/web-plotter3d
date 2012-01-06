@@ -123,6 +123,12 @@ var dy=null;
 $(function() {
     $( "#sa" ).slider({value:55, change:function(ev,ui){draw()}});
     $( "#sb" ).slider({value:5, change:function(ev,ui){draw()}});
+    $( "#ss" ).slider({value:50, change:function(ev,ui){
+            traslator.scale=ui.value/100;
+            
+            draw();
+    }});
+    
     $( "#c1" ).mousedown(function(event) {
        drag=true;
        dx=event.clientY;
@@ -149,8 +155,8 @@ $(function() {
                 } else if(bv>100) {
                     bv=0;
                 }
-                $( "#sa" ).slider("option","value",av);
-                $( "#sb" ).slider("option","value",bv);
+                $( "#sa" ).slider("option","value",Math.ceil(av));
+                $( "#sb" ).slider("option","value",Math.ceil(bv));
                 draw();
                 dx=ccdx;
                 dy=ccdy;
@@ -251,6 +257,8 @@ $(function() {
 </textarea>
 <div>a:<div id="sa"></div></div>
 <div>b:<div id="sb"></div></div>
+<div>s:<div id="ss"></div></div>
+
 <input type="button" value="Refresh" onclick="draw()" />
 
 </div>
