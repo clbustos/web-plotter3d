@@ -116,12 +116,52 @@ for(i=0;i<m2e.length;i++) {
 
 }
 
+var drag=false;
+var dx=null;
+var dy=null;
+
 $(function() {
     $( "#sa" ).slider({value:55, change:function(ev,ui){draw()}});
     $( "#sb" ).slider({value:5, change:function(ev,ui){draw()}});
-    		draw();
-
-	});
+    $( "#c1" ).mousedown(function(event) {
+       drag=true;
+       dx=event.clientY;
+       dy=event.clientX;       
+    });
+    $( "#c1" ).mouseup(function() {
+            drag=false;
+    });
+    $( "#c1" ).mousemove(function(event) {
+            if(drag) {
+                ccdx=event.clientY;
+                ccdy=event.clientX;
+                cdx=(dx-ccdx)/2;
+                cdy=(dy-ccdy)/2;
+                av=($( "#sa" ).slider( "option", "value" )+0)+cdx;
+                bv=($( "#sb" ).slider( "option", "value" )+0)+cdy;
+                if(av<0) {
+                    av=100;
+                } else if(av>100) {
+                    av=0;
+                }
+                if (bv<0) {
+                    bv=100
+                } else if(bv>100) {
+                    bv=0;
+                }
+                $( "#sa" ).slider("option","value",av);
+                $( "#sb" ).slider("option","value",bv);
+                draw();
+                dx=ccdx;
+                dy=ccdy;
+            }
+    });
+    $( "#c1" ).mouseleave(function() {
+            drag=false;
+    });
+    draw();
+    		
+});
 
 
 </script>
